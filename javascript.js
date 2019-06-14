@@ -46,10 +46,23 @@ var firebaseConfig = {
   $("#frequency-input").val("");
   $("#firstTrain-input").val("");
 
-  //using algorithm to find the next train time
+  })
 
- 
+//event handlers for database to be upgraded
+  database.ref().on("child_added", function(childAddedSnapshot) {
+    var firstTrain = childAddedSnapshot.val().firstTrain;
+    var trainDestination = childAddedSnapshot.val().trainDestination;
+    var trainFrequency = childAddedSnapshot.val().trainFrequency;
+    var trainName = childAddedSnapshot.val().trainName;
   
+  //have to create new rows for every database update
+  var newRow = $("<tr>").append(
+      $("<td>").text(trainName),
+      $("<td>").text(trainDestination),
+      $("<td>").text(trainFrequency),
+      $("<td>").text(""),
+      $("<td>").text("N/A"));
 
+      $("#train-table").append(newRow);
 
   })
